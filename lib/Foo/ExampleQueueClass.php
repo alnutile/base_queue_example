@@ -11,6 +11,7 @@ namespace Foo;
 
 class ExampleQueueClass {
 
+
     public function fire($job, $payload, $queue)
     {
         var_dump("Resolved and fired here");

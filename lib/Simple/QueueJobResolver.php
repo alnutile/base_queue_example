@@ -8,9 +8,14 @@
 
 namespace Simple;
 use Pekkis\Queue\Queue;
+use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
 
 class QueueJobResolver {
 
+    /**
+     * @var \Silex\Application
+     */
     protected $app;
 
     /**
@@ -19,12 +24,31 @@ class QueueJobResolver {
     protected $queue;
 
     protected $job;
+    protected $data;
+    protected $resolved;
+    protected $request;
 
 
-
-    public function __construct($app = null)
+    public function __construct(Application $app = null)
     {
         $this->app = $app;
+    }
+
+    public function getNextJob(Request $request, Application $app)
+    {
+        $this->setRequest($request);
+        $this->setApp($app);
+
+        $queue = $this->app['queue'];
+        $received = $queue->deQueue();
+        if ($received != null)
+        {
+            $this->data = $received->getData();
+            $this->setJob($received);
+            $this->setQueue($queue);
+            $this->resolved = $this->resolveAndFire(['job' => $this->data['class'], 'data' => $this->data['data']]);
+        }
+        return $this->app->json($this->resolved);
     }
 
     /**
@@ -95,6 +119,12 @@ class QueueJobResolver {
     public function setQueue($queue)
     {
         $this->queue = $queue;
+        return $this;
+    }
+
+    private function setRequest($request)
+    {
+        $this->request = $request;
         return $this;
     }
 
