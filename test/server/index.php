@@ -20,6 +20,9 @@ $visibilityTimeout = 60;
 $app['queue'] = new Queue(new AmazonSQSAdapter($key, $secret, $region, $queueName, $visibilityTimeout));
 $app['example.queue.class'] = new \Foo\ExampleQueueClass();
 $app['queue.resolver'] = new \Simple\QueueJobResolver($app);
+
+
+
 $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     'security.firewalls' => [
         'users' => array(
@@ -72,7 +75,10 @@ $app->get('/get_next_job', function() use ($app){
     return $app->json($example_output);
 });
 
-$app->get('/job_add', function () use ($app) {
+$app->get('/get_next_job_using_controller', 'Simple\\QueueJobResolver::getNextJob');
+
+
+$app->get('/job_add_example', function () use ($app) {
     $uuid = date('U');
     $app['queue']->enqueue($_ENV['SQS_QUEUE_NAME'], [
         'class' => 'example.queue.class', //as registered with the Dependency Injection Component
