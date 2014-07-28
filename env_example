@@ -1,0 +1,4 @@
+SQS_KEY=barfoo
+SQS_SECRET=foobar
+SQS_REGION=bar
+SQS_QUEUE_NAME=foo

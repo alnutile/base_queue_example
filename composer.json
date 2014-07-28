@@ -1,0 +1,39 @@
+{
+    "name": "alnutile/REPO_NAME",
+    "type": "library",
+    "description": "",
+    "keywords": [],
+    "homepage": "https://github.com/alnutile/REPO_NAME",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alfred Nutile",
+            "email": "me@alfrednutile.info"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/process": ">=2.3",
+        "symfony/event-dispatcher": ">=2.3",
+        "illuminate/queue": "4.1.*",
+        "pekkis/queue": "dev-master",
+        "vlucas/phpdotenv": "1.0.6",
+        "aws/aws-sdk-php": "2.6.*@dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~3.0",
+        "mockery/mockery": "0.9.*@dev",
+        "pda/pheanstalk": "~2.1",
+        "silex/silex": "~1.1",
+        "symfony/security": "~2.3"
+    },
+    "config": {
+        "bin-dir": "bin/"
+    },
+    "autoload": {
+        "psr-0": {
+            "Foo\\": "lib/",
+            "Simple\\": "lib/"
+        }
+    }
+}
